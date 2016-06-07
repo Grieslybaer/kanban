@@ -1,0 +1,28 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<%= link_to "Kanban", root_path, class: 'navbar-brand' %>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<% if user_signed_in? %>
+				
+				<li><%= link_to "Projects", root_path %></li>
+				<li><%= link_to "New project", new_project_path %></li>
+				<li role="presentation" class="dropdown">
+			    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+			      Me <span class="caret"></span>
+			    </a>
+			    <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+			    	<li><%= link_to "Profile", user_path(current_user) %></li>
+			    	<li role="separator" class="divider"></li>
+			    	<li><%= link_to "Edit Account", edit_user_registration_path %></li>
+			      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+			    </ul>
+			  </li>
+			<% else %>
+				<li><%= link_to "Log in", user_session_path %></li>
+				<li><%= link_to "Sign up", new_user_registration_path %></li>
+			<% end %>
+		</ul>
+	</div>
+</nav>

@@ -1,0 +1,47 @@
+<%= form_for([@project, @task], html: { class: 'form-horizontal' }) do |f| %>
+  <% if @task.errors.any? %>
+     <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4><%= pluralize(@task.errors.count, "error") %> prohibited this Task from being saved:</h4>
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_area :description, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :finishing_date, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.date_field :finishing_date, min: Date.today, class: 'form-control' %>
+    </div>
+  </div>
+  <%= f.fields_for :assignment do |a| %>
+    <div class="form-group">
+      <%= a.label :user, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= a.select :user_id, @members.map { |value| [value.full_name, value.id]}, class: 'form-control' %>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

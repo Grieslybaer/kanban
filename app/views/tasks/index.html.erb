@@ -1,0 +1,44 @@
+<h2>Listing Project Tasks</h2>
+<hr>
+<% if @tasks.empty? %>
+	<div class="alert alert-info" role="alert">
+		<p>No tasks available!</p>
+		<%= link_to "Create new task", new_project_task_path, class: 'btn btn-success' %>
+	</div>
+<% else %>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Description</th>
+			<th>Deadline</th>
+			<th>Status</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @tasks.each_with_index do |task, index| %>
+			<tr>
+				<td><%= index+1 %></td>
+				<td><%= task.name %></td>
+				<td><%= truncate(task.description) %></td>
+				<td><%= task.finishing_date %></td>
+				<td><%= task.assignment.status %></td>
+				<td><%= link_to 'Show', project_task_path(@project, task), class: 'btn btn-primary btn-xs' %></td>
+				<% if can? :manage, @project %>
+					<td><%= link_to 'Edit', edit_project_task_path(@project, task), class: 'btn btn-success btn-xs' %></td>
+					<td><%= link_to 'Destroy', project_task_path(@project, task), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger btn-xs' %></td>
+				<% else %>
+					<td></td>
+					<td></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<% end %>
+<hr>
+<%= link_to 'Back', project_path(@project), class: "btn btn-default" %>

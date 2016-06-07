@@ -33,6 +33,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+	gem 'minitest-rails-capybara'
+  gem 'poltergeist', '~> 1.5.0'
+  gem 'factory_girl_rails', '~> 4.0'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 end
@@ -45,3 +48,7 @@ group :development do
   gem 'spring'
 end
 
+# Use Bootstrap
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'devise'
+gem 'cancancan', '~> 1.10'

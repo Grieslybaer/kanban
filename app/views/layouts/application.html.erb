@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Kanban</title>
+  <title>CbraKanban</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<%= render 'layouts/header' %>
+	<div class="container">
+		
+		<% flash.each do |key, value| %>
+			<div class="alert <%= flash_class(key.to_sym) %> alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<%= value %>
+			</div>
+		<% end %>
 
-<%= yield %>
-
+		<%= yield %>
+		
+	</div>
 </body>
 </html>

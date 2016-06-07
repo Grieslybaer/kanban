@@ -1,0 +1,52 @@
+<h2><%= @project.name %></h2>
+<hr>
+
+<table class="table">
+	<thead>
+		<tr>
+			<% @states.each do |state| %>
+				<th><%= state %></th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<% @states.each_with_index do |state, index| %>
+				<td>
+					<% if @assignments[state] %>
+						<% @assignments[state].each do |a| %>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4><%= link_to a.task.name, project_task_path(@project, a.task) %></h4>
+								</div>
+								<div class="panel-body">
+									<p><strong>Deadline:</strong> <%= a.task.finishing_date %></p>
+									<% if a.user_id %>
+									<p><strong>User:</strong> <%= a.user.full_name %></p>
+									<% end %>
+									<p><%= truncate(a.task.description) if a.task.description %></p>
+									<% if can?(:update, a) && state != @states.first %>
+									<%= link_to content_tag(:span, nil, class: "glyphicon glyphicon-chevron-left pull-left"), project_assignment_path(@project, a, assignment: { status: @states[index-1]}), method: :put, confirm: "Are you sure?" %>
+									<% end %>
+									<% if can?(:update, a) && state != @states.last %>
+									<%= link_to content_tag(:span, nil, class: "glyphicon glyphicon-chevron-right pull-right"), project_assignment_path(@project, a, assignment: { status: @states[index+1]}), method: :put, confirm: "Are you sure?" %>
+									<% end %>
+								</div>
+							</div>
+						<% end %>
+					<% end %>
+				</td>
+			<% end %>
+		</tr>
+	</tbody>
+</table>
+<div class="alert alert-info">
+	<p><strong>Owner:</strong> <%= @owner.full_name %></p>
+	<p><strong>Deadline:</strong> <%= @project.deadline %></p>
+	<p class="text-muted"><%= @project.description %></p>
+</div>
+<% if can? :manage, @project %>
+	<%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-success pull-right' %>
+	<%= link_to 'Add Card', new_project_task_path(@project), class: 'btn btn-primary pull-right' %>
+<% end %>
+<%= link_to 'Members', project_members_path(@project), class: 'btn btn-primary pull-left' %>

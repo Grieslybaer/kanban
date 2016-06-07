@@ -1,0 +1,32 @@
+<h2><%= @task.name %></h2>
+<hr>
+<div class="row">
+	<div class="col-md-4">
+		<strong>Deadline:</strong>
+	</div>
+	<div class="col-md-8">
+		<%= @task.finishing_date %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<strong>Status:</strong>
+	</div>
+	<div class="col-md-8">
+		<%= @task.assignment.status %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<strong>Description:</strong>
+	</div>
+	<div class="col-md-8">
+		<%= @task.description %>
+	</div>
+</div>
+<hr>
+<% if can? :manage, @project %>
+<%= link_to 'Edit', edit_project_task_path(@project, @task), class: 'btn btn-success' %>
+<%= link_to 'Destroy', project_task_path(@project, @task), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger pull-right' %>
+<% end %>
+<%= link_to 'Back', project_path(@project), class: 'btn btn-default' %>
